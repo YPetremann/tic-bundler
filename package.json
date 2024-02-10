@@ -1,0 +1,19 @@
+{
+  "name": "tic-lua-bundler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.mjs",
+  "scripts": {
+    "start": "./main.mjs",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "luabundle": "^1.6.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
