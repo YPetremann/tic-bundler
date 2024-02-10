@@ -27,14 +27,18 @@ const validate =
 program
   .name("tic-bundler")
   .description("Tool to bundle your Tic80 games")
-  .version("0.1.0");
+  .version("0.1.0")
+  .argument("<bundle>", "target file to bundle your project")
+  .argument("<main>", "entry point of your project")
+  .argument("[asset]", "asset file", "asset.<ext>")
+  .option("--tic <tic>", "path to tic80", "tic80");
 
 program
   .command("watch")
   .description("watch and compile in both direction")
   .argument("<bundle>")
   .argument("<main>")
-  .argument("[main]")
+  .argument("[asset]")
   .option("--tic <tic>", "path to tic80", "tic80")
   .action(validate(commands.watch));
 
@@ -43,7 +47,7 @@ program
   .description("bundle current game into one file")
   .argument("<bundle>")
   .argument("<main>")
-  .argument("[main]")
+  .argument("[asset]")
   .action(validate(commands.bundle));
 
 program
@@ -51,7 +55,7 @@ program
   .description("extract game source from one file")
   .argument("<bundle>")
   .argument("<main>")
-  .argument("[main]")
+  .argument("[asset]")
   .action(validate(commands.unbundle));
 
 program.parse();

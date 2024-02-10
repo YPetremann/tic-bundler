@@ -4,23 +4,36 @@
 // site:    website link
 // license: MIT License (change this to your license of choice)
 // version: 0.1
-// script:  js
+// script:  wren
 
-var t=0
-var x=96
-var y=24
+class Game is TIC{
 
-function TIC()
-{
-	if(btn(0))y--
-	if(btn(1))y++
-	if(btn(2))x--
-	if(btn(3))x++
-
-	cls(13)
-	spr(1+((t%60)/30|0)*2,x,y,14,3,0,0,2,2)
-	print("HELLO WORLD!",84,84)
-	t++
+	construct new(){
+		_t=0
+		_x=96
+		_y=24
+	}
+	
+	TIC(){
+		if(TIC.btn(0)){
+			_y=_y-1
+		}
+		if(TIC.btn(1)){
+			_y=_y+1
+		}
+		if(TIC.btn(2)){
+			_x=_x-1
+		}
+		if(TIC.btn(3)){
+			_x=_x+1
+		}
+		
+		TIC.cls(13)
+		TIC.spr(1+((_t%60)/30|0)*2,_x,_y,14,3,0,0,2,2)
+		TIC.print("HELLO WORLD!",84,84)
+		
+		_t=_t+1
+	}
 }
 
 // <TILES>
