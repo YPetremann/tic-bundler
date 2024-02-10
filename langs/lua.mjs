@@ -13,13 +13,11 @@ end
 
 class JSTransformer extends GenericTransformer {
   ReRequire = /require\("([^"]+)"\)/g;
-  require = (pth) => `require("${pth}")`;
-
+  WrRequire = (pth) => `require("${pth}")`;
   ReModule = /\nload\("([^"]+)",function\(require\)\n  ((?:.|\n)+?\n)end\)\n/gm;
   ReAsset = /\n(-- <[A-Z0-9]+>\n(?:.|\n)*\n-- <\/[A-Z0-9]+>\n)/gm;
-  load = (pth, src) => `load("${pth}",function(require)\n  ${src}\nend)\n\n`;
-
-  prelude = prelude;
+  WrLoad = (pth, src) => `load("${pth}",function(require)\n  ${src}\nend)\n\n`;
+  WrPrelude = () => prelude;
 }
 
 export default new JSTransformer();
