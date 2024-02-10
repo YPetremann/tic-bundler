@@ -10,8 +10,8 @@ const writeFile = ([name, content]) =>
   fs.promises
     .mkdir(path.dirname(name), { recursive: true })
     .then(() => fs.promises.writeFile(name, content));
-export function watch(args) {
-  const { bundle, main, lang, asset } = args;
+export function watch(opts) {
+  const { bundle, main, asset, lang, tic } = opts;
   const dir = path.dirname(main);
   let freeze = false;
   let started = false;
@@ -23,15 +23,12 @@ export function watch(args) {
     if (started) return;
     started = true;
     const bDir = path.dirname(bundle);
-    const tic = child_process.spawn(
-      "tic80",
-      ["--skip", `--fs=${bDir}`, bundle],
-      { stdio: "inherit" }
-    );
+    const cp = child_process.spawn(tic, ["--skip", `--fs=${bDir}`, bundle], {
+      stdio: "inherit",
+    });
     console.log("tic start");
-    tic.on("close", () => {
-      console.log("tic stopped");
-      started = false;
+    cp.on("close", () => {
+      process.exit();
     });
   }
   async function pack(msg) {

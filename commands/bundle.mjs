@@ -6,8 +6,8 @@ const writeFile = ([name, content]) =>
     .mkdir(path.dirname(name), { recursive: true })
     .then(() => fs.promises.writeFile(name, content));
 
-export async function bundle(args) {
-  const { bundle, main, lang, asset } = args;
+export async function bundle(opts) {
+  const { bundle, main, asset, lang } = opts;
   const files = await lang.bundle(main, asset, bundle);
   await Promise.all(Object.entries(files).map(writeFile));
 }
