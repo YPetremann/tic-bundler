@@ -1,6 +1,6 @@
-// script: js
+// script:  squirrel
 
-const mod = require("lib_c/module.js");
+local mod = require("lib_c/module.nut");
 
 function BOOT() {
   trace(mod);

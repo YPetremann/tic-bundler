@@ -1,3 +1,4 @@
 import lua from "./lua.mjs";
 import js from "./js.mjs";
-export default { lua, js };
+import nut from "./nut.mjs";
+export default { lua, js, nut };

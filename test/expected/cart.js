@@ -13,25 +13,28 @@ function require(name) {
   return m[name];
 }
 
-load("lib_b/module.js", function (require) {
-  const mod = require("lib_a/module.js");
-  return mod + " World";
+load("lib_c/module.js", function (require) {
+  const hello = require("lib_a/module.js");
+  const world = require("lib_b/module.js");
+  return hello + " " + world;
 });
 
 load("lib_a/module.js", function (require) {
   return "Hello";
 });
 
-const mod = require("lib_b/module.js");
+load("lib_b/module.js", function (require) {
+  return "World";
+});
+
+const mod = require("lib_c/module.js");
 
 function BOOT() {
-  cls(0);
   trace(mod);
+  exit();
 }
 
-function TIC() {
-  print(mod, 1, 1, 1);
-}
+function TIC() {}
 
 // <PALETTE>
 // 000:1a1c2c5d275db13e53ef7d57ffcd75a7f07038b76425717929366f3b5dc941a6f673eff7f4f4f494b0c2566c86333c57

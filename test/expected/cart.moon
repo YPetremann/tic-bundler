@@ -1,54 +1,36 @@
--- title:   game title
--- author:  game developer, email, etc.
--- desc:    short description
--- site:    website link
--- license: MIT License (change this to your license of choice)
--- version: 0.1
 -- script:  moon
 
-t=0
-x=96
-y=24
+local load,require
+do
+  m,p={},{}
+  load=(name,module)->
+    m[name]=module
+  require=(name)->
+
+    if not p[name] and m[name] then m[name],p[name]=m[name](require),true
+    return m[name]
+
+
+load "lib_c/module.lua",(require)->
+  hello = require("lib_a/module.lua")
+  world = require("lib_b/module.lua")
+  return hello.." "..world
+
+load "lib_a/module.lua",(require)->
+  return "Hello"
+
+load "lib_b/module.lua",(require)->
+  return "World"
+
+mod = require("lib_c/module.lua")
+
+export BOOT=->
+   trace(mod)
+   exit()
 
 export TIC=->
-  if btn 0
-    y-=1
-  if btn 1
-    y+=1
-  if btn 2
-    x-=1
-  if btn 3
-    x+=1
+   exit()
 
-  cls 13
-  spr 1+(t%60)//30*2,x,y,14,3,0,0,2,2
-  print "HELLO WORLD!",84,84
-  t+=1
-
--- <TILES>
--- 001:eccccccccc888888caaaaaaaca888888cacccccccacc0ccccacc0ccccacc0ccc
--- 002:ccccceee8888cceeaaaa0cee888a0ceeccca0ccc0cca0c0c0cca0c0c0cca0c0c
--- 003:eccccccccc888888caaaaaaaca888888cacccccccacccccccacc0ccccacc0ccc
--- 004:ccccceee8888cceeaaaa0cee888a0ceeccca0cccccca0c0c0cca0c0c0cca0c0c
--- 017:cacccccccaaaaaaacaaacaaacaaaaccccaaaaaaac8888888cc000cccecccccec
--- 018:ccca00ccaaaa0ccecaaa0ceeaaaa0ceeaaaa0cee8888ccee000cceeecccceeee
--- 019:cacccccccaaaaaaacaaacaaacaaaaccccaaaaaaac8888888cc000cccecccccec
--- 020:ccca00ccaaaa0ccecaaa0ceeaaaa0ceeaaaa0cee8888ccee000cceeecccceeee
--- </TILES>
-
--- <WAVES>
--- 000:00000000ffffffff00000000ffffffff
--- 001:0123456789abcdeffedcba9876543210
--- 002:0123456789abcdef0123456789abcdef
--- </WAVES>
-
--- <SFX>
--- 000:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000304000000000
--- </SFX>
-
--- <TRACKS>
--- 000:100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
--- </TRACKS>
 
 -- <PALETTE>
 -- 000:1a1c2c5d275db13e53ef7d57ffcd75a7f07038b76425717929366f3b5dc941a6f673eff7f4f4f494b0c2566c86333c57

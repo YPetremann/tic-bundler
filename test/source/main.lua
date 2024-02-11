@@ -1,12 +1,10 @@
 -- script: lua
 
-local mod = require("lib_b/module.lua")
+local mod = require("lib_c/module.lua")
 
 function BOOT()
-  cls(0)
   trace(mod)
+  exit()
 end
 
-function TIC()
-  print(mod,1,1,1)
-end
+function TIC() end

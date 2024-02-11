@@ -1,29 +1,11 @@
-# title:   game title
-# author:  game developer, email, etc.
-# desc:    short description
-# site:    website link
-# license: MIT License (change this to your license of choice)
-# version: 0.1
 # script:  ruby
 
-def Moda
-	return "Hello"
-end
-
-def Modb
-	mod = Moda()
-	return mod + " World"
-end
-
-mod = Modb()
-
 def BOOT
-	cls 0
-	trace(mod)
+  trace("Burp")
+  exit()
 end
 
 def TIC
-	print(mod,1,1,1)
 end
 
 # <TILES>
