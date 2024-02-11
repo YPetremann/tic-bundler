@@ -1,5 +1,5 @@
 {
-  "name": "tic-lua-bundler",
+  "name": "tic-bundler",
   "version": "1.0.0",
   "description": "",
   "bin": {
