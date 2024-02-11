@@ -15,7 +15,12 @@ export default class GenericTransformer {
     this.WrRequire(path.relative(path.dirname(name), pth));
 
   async #discover(mod, modules) {
-    mod.source = await fs.promises.readFile(mod.path, { encoding: "utf-8" });
+    try {
+      mod.source = await fs.promises.readFile(mod.path, { encoding: "utf-8" });
+    } catch (e) {
+      console.warn("not found: " + path.relative(process.cwd(), mod.path));
+      mod.source = "";
+    }
     mod.dir = path.dirname(mod.path);
     let requires = mod.source.matchAll(new RegExp(this.ReRequire));
     requires = [...requires];
@@ -33,6 +38,7 @@ export default class GenericTransformer {
   }
 
   #transformModule(mod, modules, main) {
+    if (mod.source == "") return;
     mod.source = this.WrLoad(
       path.relative(main.dir, mod.path),
       mod.source
