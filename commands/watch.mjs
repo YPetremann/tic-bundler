@@ -7,6 +7,7 @@ const log = console.log.bind(console);
 const watchOpts = { ignoreInitial: true, cwd: process.cwd() };
 const timeout = (ms) => new Promise((r) => setTimeout(r, ms));
 const writeFile = ([name, content]) =>
+  content &&
   fs.promises
     .mkdir(path.dirname(name), { recursive: true })
     .then(() => fs.promises.writeFile(name, content));
@@ -32,21 +33,31 @@ export function watch(opts) {
     });
   }
   async function pack(msg) {
-    if (freeze) return log("ignored pack : " + msg);
+    if (freeze) return;
     freeze = true;
     log("pack: " + msg);
-    const files = await lang.bundle(main, asset, bundle);
-    await Promise.all(Object.entries(files).map(writeFile));
+    try {
+      const files = await lang.bundle(main, asset, bundle);
+      await Promise.all(Object.entries(files).map(writeFile));
+    } catch (e) {
+      console.error("Bundle aborted :");
+      console.error(e.stack);
+    }
     await timeout(100);
     freeze = false;
     start();
   }
   async function unpack(msg) {
-    if (freeze) return log("ignored unpack : " + msg);
+    if (freeze) return;
     freeze = true;
     log("unpack: " + msg);
-    const files = await lang.unbundle(main, asset, bundle);
-    await Promise.all(Object.entries(files).map(writeFile));
+    try {
+      const files = await lang.unbundle(main, asset, bundle);
+      await Promise.all(Object.entries(files).map(writeFile));
+    } catch (e) {
+      console.error("Unbundle aborted :");
+      console.error(e.stack);
+    }
     await timeout(100);
     freeze = false;
     start();
